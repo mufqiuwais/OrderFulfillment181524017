@@ -6,7 +6,7 @@
       <creator>mufqi</creator>
       <description>No description provided</description>
       <coverage>4.3.1.772</coverage>
-      <version>0.5</version>
+      <version>0.13</version>
       <persistent>false</persistent>
       <identifier>UID_13133abc-cc61-4700-9a4d-a21b195a4d7f</identifier>
     </metaData>
@@ -420,22 +420,22 @@
           <split code="or" />
           <startingMappings>
             <mapping>
-              <expression query="&lt;SP_timedout&gt;{/Net/SP_timedout/text()}&lt;/SP_timedout&gt;" />
-              <mapsTo>SP_timedout</mapsTo>
-            </mapping>
-            <mapping>
               <expression query="&lt;POrder&gt;{/Net/POrder/*}&lt;/POrder&gt;" />
               <mapsTo>POrder</mapsTo>
+            </mapping>
+            <mapping>
+              <expression query="&lt;SP_timedout&gt;{/Net/SP_timedout/text()}&lt;/SP_timedout&gt;" />
+              <mapsTo>SP_timedout</mapsTo>
             </mapping>
           </startingMappings>
           <completedMappings>
             <mapping>
-              <expression query="&lt;SP_timedout&gt;{/Carrier_Appointment/SP_timedout/text()}&lt;/SP_timedout&gt;" />
-              <mapsTo>SP_timedout</mapsTo>
-            </mapping>
-            <mapping>
               <expression query="&lt;TransportationQuote&gt;{/Carrier_Appointment/TransportationQuote/*}&lt;/TransportationQuote&gt;" />
               <mapsTo>TransportationQuote</mapsTo>
+            </mapping>
+            <mapping>
+              <expression query="&lt;SP_timedout&gt;{/Carrier_Appointment/SP_timedout/text()}&lt;/SP_timedout&gt;" />
+              <mapsTo>SP_timedout</mapsTo>
             </mapping>
             <mapping>
               <expression query="&lt;ShipmentNotice&gt;{/Carrier_Appointment/ShipmentNotice/*}&lt;/ShipmentNotice&gt;" />
@@ -452,6 +452,22 @@
           </flowsInto>
           <join code="and" />
           <split code="xor" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;POrder&gt;{/Net/POrder/*}&lt;/POrder&gt;" />
+              <mapsTo>POrder</mapsTo>
+            </mapping>
+            <mapping>
+              <expression query="&lt;TransportationQuote&gt;{/Net/TransportationQuote/*}&lt;/TransportationQuote&gt;" />
+              <mapsTo>TransportationQuote</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;AcceptanceCertificate&gt;{/Freight_in_Transit/AcceptanceCertificate/*}&lt;/AcceptanceCertificate&gt;" />
+              <mapsTo>AcceptanceCertificate</mapsTo>
+            </mapping>
+          </completedMappings>
           <decomposesTo id="Freight_in_Transit" />
         </task>
         <task id="Payment">
@@ -464,12 +480,12 @@
           <split code="xor" />
           <startingMappings>
             <mapping>
-              <expression query="&lt;TransportationQuote&gt;{/Net/TransportationQuote/*}&lt;/TransportationQuote&gt;" />
-              <mapsTo>TransportationQuote</mapsTo>
-            </mapping>
-            <mapping>
               <expression query="&lt;POrder&gt;{/Net/POrder/*}&lt;/POrder&gt;" />
               <mapsTo>POrder</mapsTo>
+            </mapping>
+            <mapping>
+              <expression query="&lt;TransportationQuote&gt;{/Net/TransportationQuote/*}&lt;/TransportationQuote&gt;" />
+              <mapsTo>TransportationQuote</mapsTo>
             </mapping>
           </startingMappings>
           <decomposesTo id="Payment" />
@@ -482,6 +498,20 @@
           </flowsInto>
           <join code="and" />
           <split code="xor" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;AcceptanceCertificate&gt;{/Net/AcceptanceCertificate/*}&lt;/AcceptanceCertificate&gt;" />
+              <mapsTo>AcceptanceCertificate</mapsTo>
+            </mapping>
+            <mapping>
+              <expression query="&lt;POrder&gt;{/Net/POrder/*}&lt;/POrder&gt;" />
+              <mapsTo>POrder</mapsTo>
+            </mapping>
+            <mapping>
+              <expression query="&lt;TransportationQuote&gt;{/Net/TransportationQuote/*}&lt;/TransportationQuote&gt;" />
+              <mapsTo>TransportationQuote</mapsTo>
+            </mapping>
+          </startingMappings>
           <decomposesTo id="Freight_Delivered" />
         </task>
         <outputCondition id="OutputCondition" />
@@ -754,7 +784,7 @@
         </task>
         <task id="T_14">
           <flowsInto>
-            <nextElementRef id="T_24" />
+            <nextElementRef id="T_1" />
           </flowsInto>
           <join code="xor" />
           <split code="and" />
@@ -815,7 +845,7 @@
             <nextElementRef id="T_19" />
           </flowsInto>
           <flowsInto>
-            <nextElementRef id="T_23" />
+            <nextElementRef id="T_2" />
           </flowsInto>
           <flowsInto>
             <nextElementRef id="T_20" />
@@ -845,6 +875,18 @@
             <nextElementRef id="T_15" />
           </flowsInto>
         </condition>
+        <task id="T_1">
+          <flowsInto>
+            <nextElementRef id="T" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+        </task>
         <task id="T_10">
           <flowsInto>
             <nextElementRef id="T_12" />
@@ -922,19 +964,7 @@
             <start initiator="user" />
           </resourcing>
         </task>
-        <task id="T_20">
-          <flowsInto>
-            <nextElementRef id="C_12" />
-          </flowsInto>
-          <join code="xor" />
-          <split code="and" />
-          <resourcing>
-            <offer initiator="user" />
-            <allocate initiator="user" />
-            <start initiator="user" />
-          </resourcing>
-        </task>
-        <task id="T_23">
+        <task id="T_2">
           <flowsInto>
             <nextElementRef id="OutputCondition_2" />
           </flowsInto>
@@ -946,9 +976,9 @@
             <start initiator="user" />
           </resourcing>
         </task>
-        <task id="T_24">
+        <task id="T_20">
           <flowsInto>
-            <nextElementRef id="T_25" />
+            <nextElementRef id="C_12" />
           </flowsInto>
           <join code="xor" />
           <split code="and" />
@@ -984,20 +1014,32 @@
         </task>
         <condition id="C_11">
           <flowsInto>
-            <nextElementRef id="T_23" />
+            <nextElementRef id="T_2" />
           </flowsInto>
           <flowsInto>
-            <nextElementRef id="T_21" />
+            <nextElementRef id="T_4" />
           </flowsInto>
         </condition>
         <condition id="C_12">
           <flowsInto>
-            <nextElementRef id="T_23" />
+            <nextElementRef id="T_2" />
           </flowsInto>
           <flowsInto>
-            <nextElementRef id="T_22" />
+            <nextElementRef id="T_3" />
           </flowsInto>
         </condition>
+        <task id="T">
+          <flowsInto>
+            <nextElementRef id="T_2" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+        </task>
         <task id="T_12">
           <flowsInto>
             <nextElementRef id="C_10" />
@@ -1022,9 +1064,9 @@
             <start initiator="user" />
           </resourcing>
         </task>
-        <task id="T_21">
+        <task id="T_3">
           <flowsInto>
-            <nextElementRef id="T_23" />
+            <nextElementRef id="T_2" />
           </flowsInto>
           <join code="xor" />
           <split code="and" />
@@ -1034,21 +1076,9 @@
             <start initiator="user" />
           </resourcing>
         </task>
-        <task id="T_22">
+        <task id="T_4">
           <flowsInto>
-            <nextElementRef id="T_23" />
-          </flowsInto>
-          <join code="xor" />
-          <split code="and" />
-          <resourcing>
-            <offer initiator="user" />
-            <allocate initiator="user" />
-            <start initiator="user" />
-          </resourcing>
-        </task>
-        <task id="T_25">
-          <flowsInto>
-            <nextElementRef id="T_23" />
+            <nextElementRef id="T_2" />
           </flowsInto>
           <join code="xor" />
           <split code="and" />
@@ -1063,16 +1093,518 @@
     </decomposition>
     <decomposition id="Freight_Delivered" xsi:type="NetFactsType">
       <name>Freight Delivered</name>
+      <inputParam>
+        <index>0</index>
+        <name>TransportationQuote</name>
+        <type>TransportationQuoteType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <inputParam>
+        <index>1</index>
+        <name>AcceptanceCertificate</name>
+        <type>AcceptanceCertificateType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <inputParam>
+        <index>2</index>
+        <name>POrder</name>
+        <type>PurchaseOrderType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <localVariable>
+        <index>3</index>
+        <name>ClaimsDeadlineTimer</name>
+        <type>YTimerType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue />
+      </localVariable>
+      <localVariable>
+        <index>4</index>
+        <name>LossOrDamageClaim</name>
+        <type>LossOrDamageClaimType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue />
+      </localVariable>
+      <localVariable>
+        <index>5</index>
+        <name>ReturnMerchandise</name>
+        <type>ReturnMerchandiseType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue />
+      </localVariable>
+      <localVariable>
+        <index>6</index>
+        <name>LossOrDamageClaimApproval</name>
+        <type>LossOrDamageClaimApprovalType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue />
+      </localVariable>
+      <localVariable>
+        <index>7</index>
+        <name>ReturnMerchandiseApproval</name>
+        <type>ReturnMerchandiseApprovalType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue />
+      </localVariable>
       <processControlElements>
-        <inputCondition id="InputCondition_5" />
+        <inputCondition id="InputCondition_5">
+          <flowsInto>
+            <nextElementRef id="Lodge_a_request_for_Return_Merchandise" />
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Claims_Timeout" />
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Lodge_Loss_or_Damage_Claim_Report" />
+          </flowsInto>
+        </inputCondition>
+        <task id="Claims_Timeout">
+          <name>Claims Timeout</name>
+          <flowsInto>
+            <nextElementRef id="OutputCondition_5" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Claims_Timeout" />
+        </task>
+        <task id="Lodge_Loss_or_Damage_Claim_Report">
+          <name>Lodge Loss or Damage Claim Report</name>
+          <flowsInto>
+            <nextElementRef id="Authorize_Loss_or_Damage_Claim" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;LossOrDamageClaim&gt;&lt;OrderNumber&gt;{/Freight_Delivered/POrder/Order/OrderNumber/text()}&lt;/OrderNumber&gt;&lt;ShipmentNumber&gt;{/Freight_Delivered/TransportationQuote/ShipmentNumber/text()}&lt;/ShipmentNumber&gt;&lt;AcceptanceDate&gt;{/Freight_Delivered/AcceptanceCertificate/AcceptanceDate/text()}&lt;/AcceptanceDate&gt;&lt;ReasonForClaim/&gt;&lt;/LossOrDamageClaim&gt;" />
+              <mapsTo>LossOrDamageClaim</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;LossOrDamageClaim&gt;{/Lodge_Loss_or_Damage_Claim_Report/LossOrDamageClaim/*}&lt;/LossOrDamageClaim&gt;" />
+              <mapsTo>LossOrDamageClaim</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="system">
+              <distributionSet>
+                <initialSet>
+                  <role>RO-29959559-7725-40a0-930e-ee4a56541654</role>
+                </initialSet>
+              </distributionSet>
+            </offer>
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Lodge_Loss_or_Damage_Claim_Report" />
+        </task>
+        <task id="Lodge_a_request_for_Return_Merchandise">
+          <name>Lodge a request for Return Merchandise</name>
+          <flowsInto>
+            <nextElementRef id="Authorize_Return_Merchandise" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ReturnMerchandise&gt;&lt;OrderNumber&gt;{/Freight_Delivered/POrder/Order/OrderNumber/text()}&lt;/OrderNumber&gt;&lt;ShipmentNumber&gt;{/Freight_Delivered/TransportationQuote/ShipmentNumber/text()}&lt;/ShipmentNumber&gt;&lt;AcceptanceDate&gt;{/Freight_Delivered/AcceptanceCertificate/AcceptanceDate/text()}&lt;/AcceptanceDate&gt;&lt;CheckedOrderLines&gt;{/Freight_Delivered/POrder/Order/OrderLines/*} &lt;Selected&gt;false&lt;/Selected&gt;&lt;/CheckedOrderLines&gt;&lt;ReasonForReturn/&gt;&lt;/ReturnMerchandise&gt;" />
+              <mapsTo>ReturnMerchandise</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;ReturnMerchandise&gt;{/Lodge_a_request_for_Return_Merchandise/ReturnMerchandise/*}&lt;/ReturnMerchandise&gt;" />
+              <mapsTo>ReturnMerchandise</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="system">
+              <distributionSet>
+                <initialSet>
+                  <role>RO-29959559-7725-40a0-930e-ee4a56541654</role>
+                </initialSet>
+              </distributionSet>
+            </offer>
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Lodge_a_request_for_Return_Merchandise" />
+        </task>
+        <task id="Authorize_Loss_or_Damage_Claim">
+          <name>Authorize Loss or Damage Claim</name>
+          <flowsInto>
+            <nextElementRef id="OutputCondition_5" />
+            <predicate ordering="0">true()</predicate>
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Loss_or_Damage_Management" />
+            <isDefaultFlow />
+          </flowsInto>
+          <join code="xor" />
+          <split code="xor" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;LossOrDamageClaimApproval&gt;&lt;LossOrDamageClaim&gt;{/Freight_Delivered/LossOrDamageClaim/*}&lt;/LossOrDamageClaim&gt;&lt;Approved&gt;false&lt;/Approved&gt;&lt;/LossOrDamageClaimApproval&gt;" />
+              <mapsTo>LossOrDamageClaimApproval</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;LossOrDamageClaimApproval&gt;{/Authorize_Loss_or_Damage_Claim/LossOrDamageClaimApproval/*}&lt;/LossOrDamageClaimApproval&gt;" />
+              <mapsTo>LossOrDamageClaimApproval</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="system">
+              <distributionSet>
+                <initialSet>
+                  <role>RO-5dee0ac5-b65b-42e6-bef3-8e0446f74dca</role>
+                </initialSet>
+              </distributionSet>
+            </offer>
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Authorize_Loss_or_Damage_Claim" />
+        </task>
+        <task id="Authorize_Return_Merchandise">
+          <name>Authorize Return Merchandise</name>
+          <flowsInto>
+            <nextElementRef id="OutputCondition_5" />
+            <predicate ordering="0">true()</predicate>
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Return_Merchandise" />
+            <isDefaultFlow />
+          </flowsInto>
+          <join code="xor" />
+          <split code="xor" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ReturnMerchandiseApproval&gt;&lt;ReturnMerchandise&gt;{/Freight_Delivered/ReturnMerchandise/*}&lt;/ReturnMerchandise&gt;&lt;Approved&gt;false&lt;/Approved&gt;&lt;/ReturnMerchandiseApproval&gt;" />
+              <mapsTo>ReturnMerchandiseApproval</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;ReturnMerchandiseApproval&gt;{/Authorize_Return_Merchandise/ReturnMerchandiseApproval/*}&lt;/ReturnMerchandiseApproval&gt;" />
+              <mapsTo>ReturnMerchandiseApproval</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="system">
+              <distributionSet>
+                <initialSet>
+                  <role>RO-5dee0ac5-b65b-42e6-bef3-8e0446f74dca</role>
+                </initialSet>
+              </distributionSet>
+            </offer>
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Authorize_Return_Merchandise" />
+        </task>
+        <task id="Loss_or_Damage_Management">
+          <name>Loss or Damage Management</name>
+          <flowsInto>
+            <nextElementRef id="OutputCondition_5" />
+            <isDefaultFlow />
+          </flowsInto>
+          <join code="and" />
+          <split code="xor" />
+          <decomposesTo id="Loss_or_Damage_Management" />
+        </task>
+        <task id="Return_Merchandise">
+          <name>Return Merchandise</name>
+          <flowsInto>
+            <nextElementRef id="OutputCondition_5" />
+            <isDefaultFlow />
+          </flowsInto>
+          <join code="and" />
+          <split code="xor" />
+          <decomposesTo id="Return_Merchandise" />
+        </task>
         <outputCondition id="OutputCondition_5" />
       </processControlElements>
     </decomposition>
     <decomposition id="Freight_in_Transit" xsi:type="NetFactsType">
       <name>Freight in Transit</name>
+      <inputParam>
+        <index>0</index>
+        <name>TransportationQuote</name>
+        <type>TransportationQuoteType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <inputParam>
+        <index>1</index>
+        <name>POrder</name>
+        <type>PurchaseOrderType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>2</index>
+        <name>AcceptanceCertificate</name>
+        <type>AcceptanceCertificateType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <defaultValue />
+      </outputParam>
+      <localVariable>
+        <index>0</index>
+        <name>AcceptanceCertificate</name>
+        <type>AcceptanceCertificateType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue />
+      </localVariable>
+      <localVariable>
+        <index>3</index>
+        <name>ShipmentStatusInquiry</name>
+        <type>ShipmentStatusInquiryType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue />
+      </localVariable>
+      <localVariable>
+        <index>4</index>
+        <name>TrackpointOrderEntries</name>
+        <type>TrackpointOrderEntriesType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue />
+      </localVariable>
+      <localVariable>
+        <index>5</index>
+        <name>TrackpointNotices</name>
+        <type>TrackpointNoticesType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue>&lt;TrackpointNotice&gt;
+    &lt;OrderNumber/&gt;
+    &lt;ShipmentNumber/&gt;
+    &lt;Trackpoint/&gt;
+    &lt;ArrivalTime&gt;00:00:00&lt;/ArrivalTime&gt;
+    &lt;DepartureTime&gt;00:00:00&lt;/DepartureTime&gt;
+    &lt;Notes/&gt;
+ &lt;/TrackpointNotice&gt;</initialValue>
+      </localVariable>
       <processControlElements>
-        <inputCondition id="InputCondition_3" />
+        <inputCondition id="InputCondition_3">
+          <flowsInto>
+            <nextElementRef id="T_21" />
+          </flowsInto>
+        </inputCondition>
+        <task id="T_21">
+          <flowsInto>
+            <nextElementRef id="C_13" />
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Issue_Trackpoint_Notice" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+        </task>
+        <condition id="C_13">
+          <flowsInto>
+            <nextElementRef id="Initiate_Shipment_Status_Inquiry" />
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Create_Acceptance_Certificate" />
+          </flowsInto>
+        </condition>
+        <task id="Create_Acceptance_Certificate">
+          <name>Create Acceptance Certificate</name>
+          <flowsInto>
+            <nextElementRef id="OutputCondition_3" />
+          </flowsInto>
+          <join code="and" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;AcceptanceCertificate&gt;{/Freight_in_Transit/AcceptanceCertificate/*}&lt;/AcceptanceCertificate&gt;" />
+              <mapsTo>AcceptanceCertificate</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;AcceptanceCertificate&gt;{/Create_Acceptance_Certificate/AcceptanceCertificate/*}&lt;/AcceptanceCertificate&gt;" />
+              <mapsTo>AcceptanceCertificate</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="system">
+              <distributionSet>
+                <initialSet>
+                  <role>RO-4ed64ae5-32ff-49fc-8129-8deffc7e3018</role>
+                </initialSet>
+              </distributionSet>
+            </offer>
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Create_Acceptance_Certificate" />
+        </task>
+        <task id="Initiate_Shipment_Status_Inquiry">
+          <name>Initiate Shipment Status Inquiry</name>
+          <flowsInto>
+            <nextElementRef id="C_13" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ShipmentStatusInquiry&gt;&lt;OrderNumber&gt;{/Freight_in_Transit/POrder/Order/OrderNumber/text()}&lt;/OrderNumber&gt;&lt;ShipmentNumber&gt;{/Freight_in_Transit/TransportationQuote/ShipmentNumber/text()}&lt;/ShipmentNumber&gt;&lt;Inquiry/&gt;&lt;/ShipmentStatusInquiry&gt;" />
+              <mapsTo>ShipmentStatusInquiry</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;ShipmentStatusInquiry&gt;{/Initiate_Shipment_Status_Inquiry/ShipmentStatusInquiry/*}&lt;/ShipmentStatusInquiry&gt;" />
+              <mapsTo>ShipmentStatusInquiry</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="system">
+              <distributionSet>
+                <initialSet>
+                  <role>RO-29959559-7725-40a0-930e-ee4a56541654</role>
+                </initialSet>
+              </distributionSet>
+            </offer>
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Initiate_Shipment_Status_Inquiry" />
+        </task>
+        <task id="Issue_Trackpoint_Notice">
+          <name>Issue Trackpoint Notice</name>
+          <flowsInto>
+            <nextElementRef id="C_14" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;TrackpointNotice&gt;&lt;OrderNumber&gt;{/Freight_in_Transit/POrder/Order/OrderNumber/text()}&lt;/OrderNumber&gt;&lt;ShipmentNumber&gt;{/Freight_in_Transit/TransportationQuote/ShipmentNumber/text()}&lt;/ShipmentNumber&gt;&lt;Trackpoint/&gt;&lt;ArrivalTime&gt;{fn:current-time()}&lt;/ArrivalTime&gt;&lt;DepartureTime&gt;{fn:current-time()}&lt;/DepartureTime&gt;&lt;Notes/&gt;&lt;/TrackpointNotice&gt;" />
+              <mapsTo>TrackpointNotice</mapsTo>
+            </mapping>
+            <mapping>
+              <expression query="&lt;TrackpointNotices&gt;{/Freight_in_Transit/TrackpointNotices/*}&lt;/TrackpointNotices&gt;" />
+              <mapsTo>TrackpointNotices</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;TrackpointNotices&gt;{/Issue_Trackpoint_Notice/TrackpointNotice} {if (/Issue_Trackpoint_Notice/TrackpointNotices/TrackpointNotice/ShipmentNumber/text()!='placeholder') then( /Issue_Trackpoint_Notice/TrackpointNotices/* ) else()}&lt;/TrackpointNotices&gt;" />
+              <mapsTo>TrackpointNotices</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="system">
+              <distributionSet>
+                <initialSet>
+                  <role>RO-e541c7e5-62b5-4017-9d70-0ee7ae86502d</role>
+                </initialSet>
+              </distributionSet>
+            </offer>
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Issue_Trackpoint_Notice" />
+        </task>
+        <condition id="C_14">
+          <flowsInto>
+            <nextElementRef id="Issue_Trackpoint_Notice" />
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Log_Trackpoint_Order_Entry" />
+          </flowsInto>
+        </condition>
+        <task id="Log_Trackpoint_Order_Entry" xsi:type="MultipleInstanceExternalTaskFactsType">
+          <name>Log Trackpoint Order Entry</name>
+          <flowsInto>
+            <nextElementRef id="Create_Acceptance_Certificate" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="null" />
+              <mapsTo>null</mapsTo>
+            </mapping>
+          </startingMappings>
+          <resourcing>
+            <offer initiator="system">
+              <distributionSet>
+                <initialSet>
+                  <role>RO-80e204b8-bb52-46e9-ba01-3567568e1ad6</role>
+                </initialSet>
+              </distributionSet>
+            </offer>
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Log_Trackpoint_Order_Entry" />
+          <minimum>1</minimum>
+          <maximum>2</maximum>
+          <threshold>2</threshold>
+          <creationMode code="static" />
+          <miDataInput>
+            <expression query="/Freight_in_Transit/TrackpointNotices" />
+            <splittingExpression query="for $i in /TrackpointNotices/* return $i" />
+            <formalInputParam>TrackpointNotice</formalInputParam>
+          </miDataInput>
+          <miDataOutput>
+            <formalOutputExpression query="&lt;TrackpointOrderEntries&gt;&lt;TrackpointOrderEntry&gt;&lt;TrackpointNotice&gt;&lt;OrderNumber&gt;{/Log_Trackpoint_Order_Entry/TrackpointNotice/OrderNumber/text()}&lt;/OrderNumber&gt;&lt;ShipmentNumber&gt;{/Log_Trackpoint_Order_Entry/TrackpointNotice/ShipmentNumber/text()}&lt;/ShipmentNumber&gt;&lt;Trackpoint&gt;{/Log_Trackpoint_Order_Entry/TrackpointNotice/Trackpoint/text()}&lt;/Trackpoint&gt;&lt;ArrivalTime&gt;{/Log_Trackpoint_Order_Entry/TrackpointNotice/ArrivalTime/text()}&lt;/ArrivalTime&gt;&lt;DepartureTime&gt;{/Log_Trackpoint_Order_Entry/TrackpointNotice/DepartureTime/text()}&lt;/DepartureTime&gt;&lt;Notes&gt;{/Log_Trackpoint_Order_Entry/TrackpointNotice/Notes/text()}&lt;/Notes&gt;&lt;/TrackpointNotice&gt;&lt;Report&gt;{/Log_Trackpoint_Order_Entry/Report/text()}&lt;/Report&gt;&lt;/TrackpointOrderEntry&gt;&lt;/TrackpointOrderEntries&gt;" />
+            <outputJoiningExpression query="&lt;TrackpointNotices&gt;{for $i in /Log_Trackpoint_Order_Entry/TrackpointOrderEntry return $i}&lt;/TrackpointNotices&gt;" />
+            <resultAppliedToLocalVariable>TrackpointOrderEntries</resultAppliedToLocalVariable>
+          </miDataOutput>
+        </task>
         <outputCondition id="OutputCondition_3" />
+      </processControlElements>
+    </decomposition>
+    <decomposition id="Loss_or_Damage_Management" xsi:type="NetFactsType">
+      <name>Loss or Damage Management</name>
+      <localVariable>
+        <index>0</index>
+        <name>LossOrDamageNotice</name>
+        <type>string</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue />
+      </localVariable>
+      <processControlElements>
+        <inputCondition id="InputCondition_7">
+          <flowsInto>
+            <nextElementRef id="Loss_or_Damage_Management_2" />
+          </flowsInto>
+        </inputCondition>
+        <task id="Loss_or_Damage_Management_2">
+          <name>Loss or Damage Management</name>
+          <flowsInto>
+            <nextElementRef id="OutputCondition_7" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;LossOrDamageNotice&gt;{/To_Be_Done_Loss_or_Damage_Management/LossOrDamageNotice/text()}&lt;/LossOrDamageNotice&gt;" />
+              <mapsTo>LossOrDamageNotice</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="To_Be_Done_Loss_or_Damage_Management" />
+        </task>
+        <outputCondition id="OutputCondition_7" />
       </processControlElements>
     </decomposition>
     <decomposition id="Ordering" xsi:type="NetFactsType">
@@ -1148,6 +1680,10 @@
             <mapping>
               <expression query="&lt;POrder&gt;&lt;Company&gt;&lt;Name/&gt;&lt;Address/&gt;&lt;City/&gt;&lt;State/&gt;&lt;PostCode/&gt;&lt;Phone/&gt;&lt;Fax/&gt;&lt;BusinessNumber/&gt;&lt;/Company&gt;&lt;Order&gt;&lt;OrderNumber/&gt;&lt;OrderDate&gt;{fn:current-date()}&lt;/OrderDate&gt;&lt;Currency&gt;AUD&lt;/Currency&gt;&lt;OrderTerms/&gt;&lt;RevisionNumber&gt;0&lt;/RevisionNumber&gt;&lt;Remarks/&gt;&lt;OrderLines&gt;&lt;Line&gt;&lt;LineNumber&gt;1&lt;/LineNumber&gt;&lt;UnitCode/&gt;&lt;UnitDescription/&gt;&lt;UnitQuantity&gt;1&lt;/UnitQuantity&gt;&lt;Action&gt;Added&lt;/Action&gt;&lt;/Line&gt;&lt;/OrderLines&gt;&lt;/Order&gt;&lt;FreightCost&gt;0.00&lt;/FreightCost&gt;&lt;DeliveryLocation/&gt;&lt;InvoiceRequired&gt;false&lt;/InvoiceRequired&gt;&lt;PrePaid&gt;false&lt;/PrePaid&gt;&lt;/POrder&gt;" />
               <mapsTo>POrder</mapsTo>
+            </mapping>
+            <mapping>
+              <expression query="&lt;PO_Manager&gt;{/Ordering/PO_Manager/text()}&lt;/PO_Manager&gt;" />
+              <mapsTo>PO_Manager</mapsTo>
             </mapping>
           </startingMappings>
           <completedMappings>
@@ -1369,8 +1905,435 @@
         <initialValue />
       </localVariable>
       <processControlElements>
-        <inputCondition id="InputCondition_4" />
+        <inputCondition id="InputCondition_4">
+          <flowsInto>
+            <nextElementRef id="T_22" />
+          </flowsInto>
+        </inputCondition>
+        <task id="T_22">
+          <flowsInto>
+            <nextElementRef id="Issue_Shipment_Invoice" />
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="T_23" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+        </task>
+        <task id="Issue_Shipment_Invoice">
+          <name>Issue Shipment Invoice</name>
+          <flowsInto>
+            <nextElementRef id="Issue_Shipment_Payment_Order" />
+            <isDefaultFlow />
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Issue_Shipment_Remittance_Advice" />
+            <predicate ordering="0">true()</predicate>
+          </flowsInto>
+          <join code="xor" />
+          <split code="xor" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ShipmentInvoice&gt;&lt;OrderNumber&gt;{/Payment/POrder/Order/OrderNumber/text()}&lt;/OrderNumber&gt;&lt;ShipmentNumber&gt;{/Payment/TransportationQuote/ShipmentNumber/text()}&lt;/ShipmentNumber&gt;&lt;Company&gt;{/Payment/POrder/Company/*}&lt;/Company&gt;&lt;ShipmentCost&gt;{/Payment/TransportationQuote/ShipmentCost/text()}&lt;/ShipmentCost&gt;&lt;/ShipmentInvoice&gt;" />
+              <mapsTo>ShipmentInvoice</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;ShipmentInvoice&gt;{/Issue_Shipment_Invoice/ShipmentInvoice/*}&lt;/ShipmentInvoice&gt;" />
+              <mapsTo>ShipmentInvoice</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Issue_Shipment_Invoice" />
+        </task>
+        <task id="T_23">
+          <flowsInto>
+            <nextElementRef id="Produce_Freight_Invoice" />
+            <isDefaultFlow />
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="T_24" />
+            <predicate ordering="0">true()</predicate>
+          </flowsInto>
+          <join code="xor" />
+          <split code="xor" />
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+        </task>
+        <task id="Issue_Shipment_Payment_Order">
+          <name>Issue Shipment Payment Order</name>
+          <flowsInto>
+            <nextElementRef id="Approve_Shipment_Payment_Order" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ShipmentPaymentOrder&gt;&lt;ShipmentPaymentOrderNumber/&gt;&lt;OrderNumber&gt;{/Payment/POrder/Order/OrderNumber/text()}&lt;/OrderNumber&gt;&lt;ShipmentNumber&gt;{/Payment/TransportationQuote/ShipmentNumber/text()}&lt;/ShipmentNumber&gt;&lt;ShipmentCost&gt;{/Payment/TransportationQuote/ShipmentCost/text()}&lt;/ShipmentCost&gt;&lt;Beneficiary&gt;&lt;Beneficiary&gt;&lt;Name/&gt;&lt;Address/&gt;&lt;City/&gt;&lt;State/&gt;&lt;PostCode/&gt;&lt;Phone/&gt;&lt;Fax/&gt;&lt;BusinessNumber/&gt;&lt;/Beneficiary&gt;&lt;Bank/&gt;&lt;BankCode/&gt;&lt;AccountName/&gt;&lt;AccountNumber/&gt;&lt;/Beneficiary&gt;&lt;/ShipmentPaymentOrder&gt;" />
+              <mapsTo>ShipmentPaymentOrder</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;ShipmentPaymentOrder&gt;{/Issue_Shipment_Payment_Order/ShipmentPaymentOrder/*}&lt;/ShipmentPaymentOrder&gt;" />
+              <mapsTo>ShipmentPaymentOrder</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Issue_Shipment_Payment_Order" />
+        </task>
+        <task id="Issue_Shipment_Remittance_Advice">
+          <name>Issue Shipment Remittance Advice</name>
+          <flowsInto>
+            <nextElementRef id="T_26" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ShipmentRemittanceAdvice&gt;&lt;OrderNumber&gt;{/Payment/POrder/Order/OrderNumber/text()}&lt;/OrderNumber&gt;&lt;AmountDebited&gt;0.00&lt;/AmountDebited&gt;&lt;/ShipmentRemittanceAdvice&gt;" />
+              <mapsTo>ShipmentRemittanceAdvice</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;ShipmentRemittanceAdvice&gt;{/Issue_Shipment_Remittance_Advice/ShipmentRemittanceAdvice/*}&lt;/ShipmentRemittanceAdvice&gt;" />
+              <mapsTo>ShipmentRemittanceAdvice</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Issue_Shipment_Remittance_Advice" />
+        </task>
+        <task id="Produce_Freight_Invoice">
+          <name>Produce Freight Invoice</name>
+          <flowsInto>
+            <nextElementRef id="T_24" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;FreightInvoice&gt;&lt;OrderNumber&gt;{/Payment/POrder/Order/OrderNumber/text()}&lt;/OrderNumber&gt;&lt;Company&gt;{/Payment/POrder/Company/*}&lt;/Company&gt;&lt;FreightCost&gt;{/Payment/POrder/FreightCost/text()}&lt;/FreightCost&gt;&lt;/FreightInvoice&gt;" />
+              <mapsTo>FreightInvoice</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;FreightInvoice&gt;{/Produce_Freight_Invoice/FreightInvoice/*}&lt;/FreightInvoice&gt;" />
+              <mapsTo>FreightInvoice</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Produce_Freight_Invoice" />
+        </task>
+        <task id="T_24">
+          <flowsInto>
+            <nextElementRef id="Process_Freight_Payment" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+        </task>
+        <task id="Approve_Shipment_Payment_Order">
+          <name>Approve Shipment Payment Order</name>
+          <flowsInto>
+            <nextElementRef id="Update_Shipment_Payment_Order" />
+            <predicate ordering="0">true()</predicate>
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Process_Shipment_Payment" />
+            <isDefaultFlow />
+          </flowsInto>
+          <join code="xor" />
+          <split code="xor" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ShipmentPaymentOrder&gt;{/Payment/ShipmentPaymentOrder/*}&lt;/ShipmentPaymentOrder&gt;" />
+              <mapsTo>ShipmentPaymentOrder</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;ShipmentPaymentOrderApproval&gt;{/Approve_Shipment_Payment_Order/ShipmentPaymentOrderApproval/*}&lt;/ShipmentPaymentOrderApproval&gt;" />
+              <mapsTo>ShipmentPaymentOrderApproval</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Approve_Shipment_Payment_Order" />
+        </task>
+        <task id="Process_Freight_Payment">
+          <name>Process Freight Payment</name>
+          <flowsInto>
+            <nextElementRef id="T_25" />
+            <isDefaultFlow />
+          </flowsInto>
+          <join code="and" />
+          <split code="xor" />
+          <decomposesTo id="Process_Freight_Payment" />
+        </task>
+        <task id="T_26">
+          <flowsInto>
+            <nextElementRef id="T_25" />
+            <isDefaultFlow />
+          </flowsInto>
+          <join code="xor" />
+          <split code="xor" />
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+        </task>
+        <task id="Process_Shipment_Payment">
+          <name>Process Shipment Payment</name>
+          <flowsInto>
+            <nextElementRef id="T_26" />
+            <isDefaultFlow />
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Issue_Debit_Adjustment" />
+            <predicate ordering="1">true()</predicate>
+          </flowsInto>
+          <flowsInto>
+            <nextElementRef id="Issue_Credit_Adjustment" />
+            <predicate ordering="0">true()</predicate>
+          </flowsInto>
+          <join code="xor" />
+          <split code="xor" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ShipmentPaymentOrder&gt;{/Payment/ShipmentPaymentOrder/*}&lt;/ShipmentPaymentOrder&gt;" />
+              <mapsTo>ShipmentPaymentOrder</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;ShipmentPayment&gt;{/Process_Shipment_Payment/ShipmentPayment/*}&lt;/ShipmentPayment&gt;" />
+              <mapsTo>ShipmentPayment</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Process_Shipment_Payment" />
+        </task>
+        <task id="T_25">
+          <flowsInto>
+            <nextElementRef id="OutputCondition_4" />
+            <isDefaultFlow />
+          </flowsInto>
+          <join code="and" />
+          <split code="xor" />
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+        </task>
+        <task id="Update_Shipment_Payment_Order">
+          <name>Update Shipment Payment Order</name>
+          <flowsInto>
+            <nextElementRef id="Approve_Shipment_Payment_Order" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ShipmentPaymentOrder&gt;{/Payment/ShipmentPaymentOrder/*}&lt;/ShipmentPaymentOrder&gt;" />
+              <mapsTo>ShipmentPaymentOrder</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;ShipmentPaymentOrder&gt;{/Update_Shipment_Payment_Order/ShipmentPaymentOrder/*}&lt;/ShipmentPaymentOrder&gt;" />
+              <mapsTo>ShipmentPaymentOrder</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Update_Shipment_Payment_Order" />
+        </task>
+        <task id="Issue_Credit_Adjustment">
+          <name>Issue Credit Adjustment</name>
+          <flowsInto>
+            <nextElementRef id="T_26" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ShipmentPaymentOrder&gt;{/Payment/ShipmentPaymentOrder/*}&lt;/ShipmentPaymentOrder&gt;" />
+              <mapsTo>ShipmentPaymentOrder</mapsTo>
+            </mapping>
+            <mapping>
+              <expression query="&lt;CreditAdjustment&gt;&lt;Reimbursement&gt;{/Payment/ShipmentPayment/Balance/text()}&lt;/Reimbursement&gt;&lt;Beneficiary&gt;{/Payment/ShipmentPaymentOrder/Beneficiary/*}&lt;/Beneficiary&gt;&lt;/CreditAdjustment&gt;" />
+              <mapsTo>CreditAdjustment</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;CreditAdjustment&gt;{/Issue_Credit_Adjustment/CreditAdjustment/*}&lt;/CreditAdjustment&gt;" />
+              <mapsTo>CreditAdjustment</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Issue_Credit_Adjustment" />
+        </task>
+        <task id="Issue_Debit_Adjustment">
+          <name>Issue Debit Adjustment</name>
+          <flowsInto>
+            <nextElementRef id="Process_Shipment_Payment" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;DebitAdjustment&gt;&lt;StillDue&gt;{abs(/Payment/ShipmentPayment/Balance/text())}&lt;/StillDue&gt;&lt;/DebitAdjustment&gt;" />
+              <mapsTo>DebitAdjustment</mapsTo>
+            </mapping>
+            <mapping>
+              <expression query="&lt;ShipmentPaymentOrder&gt;{/Payment/ShipmentPaymentOrder/*}&lt;/ShipmentPaymentOrder&gt;" />
+              <mapsTo>ShipmentPaymentOrder</mapsTo>
+            </mapping>
+          </startingMappings>
+          <completedMappings>
+            <mapping>
+              <expression query="&lt;DebitAdjustment&gt;{/Issue_Debit_Adjustment/DebitAdjustment/*}&lt;/DebitAdjustment&gt;" />
+              <mapsTo>DebitAdjustment</mapsTo>
+            </mapping>
+          </completedMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="Issue_Debit_Adjustment" />
+        </task>
         <outputCondition id="OutputCondition_4" />
+      </processControlElements>
+    </decomposition>
+    <decomposition id="Process_Freight_Payment" xsi:type="NetFactsType">
+      <name>Process Freight Payment</name>
+      <localVariable>
+        <index>0</index>
+        <name>FreightPayment</name>
+        <type>string</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue>This task has been intentionally left blank</initialValue>
+      </localVariable>
+      <processControlElements>
+        <inputCondition id="InputCondition_6">
+          <flowsInto>
+            <nextElementRef id="Process_Freight_Payment_2" />
+          </flowsInto>
+        </inputCondition>
+        <task id="Process_Freight_Payment_2">
+          <name>Process Freight Payment</name>
+          <flowsInto>
+            <nextElementRef id="OutputCondition_6" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;FreightPayment&gt;{/Process_Freight_Payment/FreightPayment/text()}&lt;/FreightPayment&gt;" />
+              <mapsTo>FreightPayment</mapsTo>
+            </mapping>
+          </startingMappings>
+          <resourcing>
+            <offer initiator="user" />
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="To_Be_Done_Process_Freight_Payment" />
+        </task>
+        <outputCondition id="OutputCondition_6" />
+      </processControlElements>
+    </decomposition>
+    <decomposition id="Return_Merchandise" xsi:type="NetFactsType">
+      <name>Return Merchandise</name>
+      <localVariable>
+        <index>0</index>
+        <name>ReturnNotice</name>
+        <type>string</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <initialValue>This task has been intentionally left blank</initialValue>
+      </localVariable>
+      <processControlElements>
+        <inputCondition id="InputCondition_8">
+          <flowsInto>
+            <nextElementRef id="Return_Merchandise_2" />
+          </flowsInto>
+        </inputCondition>
+        <task id="Return_Merchandise_2">
+          <name>Return Merchandise</name>
+          <flowsInto>
+            <nextElementRef id="OutputCondition_8" />
+          </flowsInto>
+          <join code="xor" />
+          <split code="and" />
+          <startingMappings>
+            <mapping>
+              <expression query="&lt;ReturnNotice&gt;{/Return_Merchandise/ReturnNotice/text()}&lt;/ReturnNotice&gt;" />
+              <mapsTo>ReturnNotice</mapsTo>
+            </mapping>
+          </startingMappings>
+          <resourcing>
+            <offer initiator="system">
+              <distributionSet>
+                <initialSet>
+                  <participant>PA-7933b9de-5aa6-4d9c-be12-d1a5cc8a8c67</participant>
+                </initialSet>
+              </distributionSet>
+            </offer>
+            <allocate initiator="user" />
+            <start initiator="user" />
+          </resourcing>
+          <decomposesTo id="To_Be_Done_Return_Merchandise" />
+        </task>
+        <outputCondition id="OutputCondition_8" />
       </processControlElements>
     </decomposition>
     <decomposition id="Approve_Purchase_Order" xsi:type="WebServiceGatewayFactsType">
@@ -1390,12 +2353,65 @@
       </outputParam>
       <externalInteraction>manual</externalInteraction>
     </decomposition>
+    <decomposition id="Approve_Shipment_Payment_Order" xsi:type="WebServiceGatewayFactsType">
+      <name>Approve Shipment Payment Order</name>
+      <inputParam>
+        <index>0</index>
+        <name>ShipmentPaymentOrder</name>
+        <type>ShipmentPaymentOrderType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>1</index>
+        <name>ShipmentPaymentOrderApproval</name>
+        <type>ShipmentPaymentOrderApprovalType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <defaultValue />
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Authorize_Loss_or_Damage_Claim" xsi:type="WebServiceGatewayFactsType">
+      <name>Authorize Loss or Damage Claim</name>
+      <inputParam>
+        <index>0</index>
+        <name>LossOrDamageClaimApproval</name>
+        <type>LossOrDamageClaimApprovalType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>LossOrDamageClaimApproval</name>
+        <type>LossOrDamageClaimApprovalType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Authorize_Return_Merchandise" xsi:type="WebServiceGatewayFactsType">
+      <name>Authorize Return Merchandise</name>
+      <inputParam>
+        <index>0</index>
+        <name>ReturnMerchandiseApproval</name>
+        <type>ReturnMerchandiseApprovalType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>ReturnMerchandiseApproval</name>
+        <type>ReturnMerchandiseApprovalType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
     <decomposition id="Calculate_Carrier_Timeout" xsi:type="WebServiceGatewayFactsType">
       <name>Calculate Carrier Timeout</name>
       <externalInteraction>manual</externalInteraction>
     </decomposition>
     <decomposition id="Carrier_Timeout" xsi:type="WebServiceGatewayFactsType">
       <name>Carrier Timeout</name>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Claims_Timeout" xsi:type="WebServiceGatewayFactsType">
+      <name>Claims Timeout</name>
       <externalInteraction>manual</externalInteraction>
     </decomposition>
     <decomposition id="Confirm_Purchase_Order" xsi:type="WebServiceGatewayFactsType">
@@ -1406,6 +2422,22 @@
         <type>PurchaseOrderType</type>
         <namespace>http://www.w3.org/2001/XMLSchema</namespace>
       </inputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Create_Acceptance_Certificate" xsi:type="WebServiceGatewayFactsType">
+      <name>Create Acceptance Certificate</name>
+      <inputParam>
+        <index>0</index>
+        <name>AcceptanceCertificate</name>
+        <type>AcceptanceCertificateType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>AcceptanceCertificate</name>
+        <type>AcceptanceCertificateType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
       <externalInteraction>manual</externalInteraction>
     </decomposition>
     <decomposition id="Create_Purchase_Order" xsi:type="WebServiceGatewayFactsType">
@@ -1440,6 +2472,197 @@
       <name>Estimate Trailer Usage</name>
       <externalInteraction>manual</externalInteraction>
     </decomposition>
+    <decomposition id="Initiate_Shipment_Status_Inquiry" xsi:type="WebServiceGatewayFactsType">
+      <name>Initiate Shipment Status Inquiry</name>
+      <inputParam>
+        <index>0</index>
+        <name>ShipmentStatusInquiry</name>
+        <type>ShipmentStatusInquiryType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>ShipmentStatusInquiry</name>
+        <type>ShipmentStatusInquiryType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Issue_Credit_Adjustment" xsi:type="WebServiceGatewayFactsType">
+      <name>Issue Credit Adjustment</name>
+      <inputParam>
+        <index>0</index>
+        <name>CreditAdjustment</name>
+        <type>CreditAdjustmentType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <inputParam>
+        <index>1</index>
+        <name>ShipmentPaymentOrder</name>
+        <type>ShipmentPaymentOrderType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>CreditAdjustment</name>
+        <type>CreditAdjustmentType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Issue_Debit_Adjustment" xsi:type="WebServiceGatewayFactsType">
+      <name>Issue Debit Adjustment</name>
+      <inputParam>
+        <index>0</index>
+        <name>DebitAdjustment</name>
+        <type>DebitAdjustmentType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <inputParam>
+        <index>1</index>
+        <name>ShipmentPaymentOrder</name>
+        <type>ShipmentPaymentOrderType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>DebitAdjustment</name>
+        <type>DebitAdjustmentType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Issue_Shipment_Invoice" xsi:type="WebServiceGatewayFactsType">
+      <name>Issue Shipment Invoice</name>
+      <inputParam>
+        <index>0</index>
+        <name>ShipmentInvoice</name>
+        <type>ShipmentInvoiceType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>ShipmentInvoice</name>
+        <type>ShipmentInvoiceType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Issue_Shipment_Payment_Order" xsi:type="WebServiceGatewayFactsType">
+      <name>Issue Shipment Payment Order</name>
+      <inputParam>
+        <index>0</index>
+        <name>ShipmentPaymentOrder</name>
+        <type>ShipmentPaymentOrderType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>ShipmentPaymentOrder</name>
+        <type>ShipmentPaymentOrderType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Issue_Shipment_Remittance_Advice" xsi:type="WebServiceGatewayFactsType">
+      <name>Issue Shipment Remittance Advice</name>
+      <inputParam>
+        <index>0</index>
+        <name>ShipmentRemittanceAdvice</name>
+        <type>ShipmentRemittanceAdviceType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>ShipmentRemittanceAdvice</name>
+        <type>ShipmentRemittanceAdviceType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Issue_Trackpoint_Notice" xsi:type="WebServiceGatewayFactsType">
+      <name>Issue Trackpoint Notice</name>
+      <inputParam>
+        <index>0</index>
+        <name>TrackpointNotice</name>
+        <type>TrackpointNoticeType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <inputParam>
+        <index>1</index>
+        <name>TrackpointNotices</name>
+        <type>TrackpointNoticesType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>TrackpointNotice</name>
+        <type>TrackpointNoticeType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <outputParam>
+        <index>1</index>
+        <name>TrackpointNotices</name>
+        <type>TrackpointNoticesType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Lodge_Loss_or_Damage_Claim_Report" xsi:type="WebServiceGatewayFactsType">
+      <name>Lodge Loss or Damage Claim Report</name>
+      <inputParam>
+        <index>0</index>
+        <name>LossOrDamageClaim</name>
+        <type>LossOrDamageClaimType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>LossOrDamageClaim</name>
+        <type>LossOrDamageClaimType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Lodge_a_request_for_Return_Merchandise" xsi:type="WebServiceGatewayFactsType">
+      <name>Lodge a request for Return Merchandise</name>
+      <inputParam>
+        <index>0</index>
+        <name>ReturnMerchandise</name>
+        <type>ReturnMerchandiseType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>ReturnMerchandise</name>
+        <type>ReturnMerchandiseType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Log_Trackpoint_Order_Entry" xsi:type="WebServiceGatewayFactsType">
+      <name>Log Trackpoint Order Entry</name>
+      <inputParam>
+        <index>0</index>
+        <name>TrackpointNotice</name>
+        <type>TrackpointNoticeType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>TrackpointNotice</name>
+        <type>TrackpointNoticeType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <outputParam>
+        <index>1</index>
+        <name>Report</name>
+        <type>string</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <defaultValue />
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
     <decomposition id="Modify_Purchase_Order" xsi:type="WebServiceGatewayFactsType">
       <name>Modify Purchase Order</name>
       <inputParam>
@@ -1468,28 +2691,531 @@
       <name>Prepare Transportation Quote</name>
       <externalInteraction>manual</externalInteraction>
     </decomposition>
+    <decomposition id="Process_Shipment_Payment" xsi:type="WebServiceGatewayFactsType">
+      <name>Process Shipment Payment</name>
+      <inputParam>
+        <index>0</index>
+        <name>ShipmentPaymentOrder</name>
+        <type>ShipmentPaymentOrderType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>1</index>
+        <name>ShipmentPayment</name>
+        <type>ShipmentPaymentType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <defaultValue />
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Produce_Freight_Invoice" xsi:type="WebServiceGatewayFactsType">
+      <name>Produce Freight Invoice</name>
+      <inputParam>
+        <index>0</index>
+        <name>FreightInvoice</name>
+        <type>FreightInvoiceType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>FreightInvoice</name>
+        <type>FreightInvoiceType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="To_Be_Done_Loss_or_Damage_Management" xsi:type="WebServiceGatewayFactsType">
+      <name>To Be Done Loss or Damage Management</name>
+      <outputParam>
+        <index>0</index>
+        <name>LossOrDamageNotice</name>
+        <type>string</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+        <defaultValue />
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="To_Be_Done_Process_Freight_Payment" xsi:type="WebServiceGatewayFactsType">
+      <name>To Be Done Process Freight Payment</name>
+      <inputParam>
+        <index>0</index>
+        <name>FreightPayment</name>
+        <type>string</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="To_Be_Done_Return_Merchandise" xsi:type="WebServiceGatewayFactsType">
+      <name>To Be Done Return Merchandise</name>
+      <inputParam>
+        <index>0</index>
+        <name>ReturnNotice</name>
+        <type>string</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
+    <decomposition id="Update_Shipment_Payment_Order" xsi:type="WebServiceGatewayFactsType">
+      <name>Update Shipment Payment Order</name>
+      <inputParam>
+        <index>0</index>
+        <name>ShipmentPaymentOrder</name>
+        <type>ShipmentPaymentOrderType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </inputParam>
+      <outputParam>
+        <index>0</index>
+        <name>ShipmentPaymentOrder</name>
+        <type>ShipmentPaymentOrderType</type>
+        <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+      </outputParam>
+      <externalInteraction>manual</externalInteraction>
+    </decomposition>
   </specification>
   <layout>
     <locale language="en" country="US"/>
     <specification id="tugas_order">
       <size w="799" h="642"/>
-      <net id="Payment">
+      <net id="Process_Freight_Payment">
         <bounds x="0" y="0" w="1130" h="455"/>
+        <frame x="0" y="0" w="1133" h="458"/>
+        <viewport x="0" y="0" w="1133" h="458"/>
+        <vertex id="OutputCondition_6">
+          <attributes>
+            <bounds x="264" y="220" w="32" h="32"/>
+          </attributes>
+        </vertex>
+        <vertex id="InputCondition_6">
+          <attributes>
+            <bounds x="36" y="220" w="32" h="32"/>
+          </attributes>
+        </vertex>
+        <container id="Process_Freight_Payment_2">
+          <vertex>
+            <attributes>
+              <bounds x="148" y="220" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="116" y="252" w="96" h="40"/>
+            </attributes>
+          </label>
+        </container>
+        <flow source="InputCondition_6" target="Process_Freight_Payment_2">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Process_Freight_Payment_2" target="OutputCondition_6">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+      </net>
+      <net id="Payment">
+        <bounds x="0" y="-120" w="1115" h="605"/>
         <frame x="0" y="0" w="1133" h="458"/>
         <viewport x="0" y="0" w="1133" h="458"/>
         <vertex id="InputCondition_4">
           <attributes>
-            <bounds x="36" y="280" w="32" h="32"/>
+            <bounds x="0" y="216" w="32" h="32"/>
           </attributes>
         </vertex>
         <vertex id="OutputCondition_4">
           <attributes>
-            <bounds x="1,056" y="280" w="32" h="32"/>
+            <bounds x="1,004" y="156" w="32" h="32"/>
           </attributes>
         </vertex>
+        <container id="Produce_Freight_Invoice">
+          <vertex>
+            <attributes>
+              <bounds x="304" y="36" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="272" y="68" w="96" h="40"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Issue_Shipment_Remittance_Advice">
+          <vertex>
+            <attributes>
+              <bounds x="392" y="240" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="360" y="272" w="96" h="60"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Process_Freight_Payment">
+          <vertex>
+            <attributes>
+              <bounds x="572" y="128" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="540" y="160" w="96" h="40"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Issue_Shipment_Invoice">
+          <vertex>
+            <attributes>
+              <bounds x="212" y="316" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="184" y="348" w="96" h="40"/>
+            </attributes>
+          </label>
+          <decorator type="XOR_split">
+            <position>13</position>
+            <attributes>
+              <bounds x="243" y="316" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="Issue_Shipment_Payment_Order">
+          <vertex>
+            <attributes>
+              <bounds x="392" y="388" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="360" y="420" w="96" h="40"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Process_Shipment_Payment">
+          <vertex>
+            <attributes>
+              <bounds x="684" y="388" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="652" y="420" w="96" h="60"/>
+            </attributes>
+          </label>
+          <decorator type="XOR_split">
+            <position>13</position>
+            <attributes>
+              <bounds x="715" y="388" w="11" h="32"/>
+            </attributes>
+          </decorator>
+          <decorator type="XOR_join">
+            <position>12</position>
+            <attributes>
+              <bounds x="674" y="388" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="T_26">
+          <vertex>
+            <attributes>
+              <bounds x="820" y="232" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <decorator type="XOR_join">
+            <position>12</position>
+            <attributes>
+              <bounds x="810" y="232" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="T_25">
+          <vertex>
+            <attributes>
+              <bounds x="900" y="156" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <decorator type="AND_join">
+            <position>12</position>
+            <attributes>
+              <bounds x="890" y="156" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="T_24">
+          <vertex>
+            <attributes>
+              <bounds x="392" y="132" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <decorator type="XOR_join">
+            <position>12</position>
+            <attributes>
+              <bounds x="382" y="132" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="T_23">
+          <vertex>
+            <attributes>
+              <bounds x="216" y="136" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <decorator type="XOR_split">
+            <position>13</position>
+            <attributes>
+              <bounds x="247" y="136" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="Approve_Shipment_Payment_Order">
+          <vertex>
+            <attributes>
+              <bounds x="548" y="388" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="516" y="420" w="96" h="60"/>
+            </attributes>
+          </label>
+          <decorator type="XOR_split">
+            <position>13</position>
+            <attributes>
+              <bounds x="579" y="388" w="11" h="32"/>
+            </attributes>
+          </decorator>
+          <decorator type="XOR_join">
+            <position>12</position>
+            <attributes>
+              <bounds x="538" y="388" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="T_22">
+          <vertex>
+            <attributes>
+              <bounds x="80" y="216" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <decorator type="AND_split">
+            <position>13</position>
+            <attributes>
+              <bounds x="111" y="216" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="Issue_Credit_Adjustment">
+          <vertex>
+            <attributes>
+              <bounds x="820" y="388" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="788" y="420" w="96" h="40"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Update_Shipment_Payment_Order">
+          <vertex>
+            <attributes>
+              <bounds x="548" y="492" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="516" y="524" w="97" h="61"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Issue_Debit_Adjustment">
+          <vertex>
+            <attributes>
+              <bounds x="824" y="472" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="792" y="504" w="96" h="40"/>
+            </attributes>
+          </label>
+        </container>
+        <flow source="Produce_Freight_Invoice" target="T_24">
+          <ports in="13" out="4"/>
+          <attributes>
+            <lineStyle>12</lineStyle>
+            <points>
+              <value x="335" y="51.5"/>
+              <value x="376" y="80"/>
+              <value x="387" y="132"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="Issue_Credit_Adjustment" target="T_26">
+          <ports in="10" out="0"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="T_23" target="Produce_Freight_Invoice">
+          <ports in="0" out="12"/>
+          <attributes>
+            <lineStyle>12</lineStyle>
+            <points>
+              <value x="248" y="132"/>
+              <value x="264" y="72"/>
+              <value x="304" y="51.5"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="InputCondition_4" target="T_22">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Process_Shipment_Payment" target="Issue_Credit_Adjustment">
+          <ports in="2" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Process_Shipment_Payment" target="Issue_Debit_Adjustment">
+          <ports in="4" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Approve_Shipment_Payment_Order" target="Update_Shipment_Payment_Order">
+          <ports in="3" out="13"/>
+          <attributes>
+            <lineStyle>12</lineStyle>
+            <points>
+              <value x="589" y="411.25"/>
+              <value x="624" y="480"/>
+              <value x="579" y="507.5"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="Issue_Shipment_Invoice" target="Issue_Shipment_Payment_Order">
+          <label>[else]</label>
+          <ports in="4" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="T_26" target="T_25">
+          <ports in="13" out="0"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="T_25" target="OutputCondition_4">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+            <points>
+              <value x="931" y="171.5"/>
+              <value x="1,004" y="171.5"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="Process_Shipment_Payment" target="T_26">
+          <ports in="0" out="3"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Issue_Shipment_Remittance_Advice" target="T_26">
+          <ports in="13" out="1"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+            <points>
+              <value x="423" y="255.5"/>
+              <value x="810" y="239.75"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="T_24" target="Process_Freight_Payment">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Issue_Shipment_Payment_Order" target="Approve_Shipment_Payment_Order">
+          <ports in="13" out="2"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="T_23" target="T_24">
+          <ports in="2" out="2"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Issue_Shipment_Invoice" target="Issue_Shipment_Remittance_Advice">
+          <label>[pre-paid shipments]</label>
+          <ports in="0" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Issue_Debit_Adjustment" target="Process_Shipment_Payment">
+          <ports in="11" out="0"/>
+          <attributes>
+            <lineStyle>12</lineStyle>
+            <points>
+              <value x="839.5" y="503"/>
+              <value x="704" y="532"/>
+              <value x="679" y="419"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="T_22" target="Issue_Shipment_Invoice">
+          <label>payment for the shipment</label>
+          <ports in="4" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="T_22" target="T_23">
+          <label>payment for the freight</label>
+          <ports in="0" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Update_Shipment_Payment_Order" target="Approve_Shipment_Payment_Order">
+          <ports in="12" out="3"/>
+          <attributes>
+            <lineStyle>12</lineStyle>
+            <points>
+              <value x="548" y="507.5"/>
+              <value x="504" y="480"/>
+              <value x="538" y="411.25"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="Process_Freight_Payment" target="T_25">
+          <ports in="13" out="2"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Approve_Shipment_Payment_Order" target="Process_Shipment_Payment">
+          <ports in="2" out="2"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
       </net>
       <net id="Carrier_Appointment">
-        <bounds x="0" y="0" w="1560" h="573"/>
+        <bounds x="0" y="0" w="1561" h="573"/>
         <frame x="0" y="0" w="1133" h="458"/>
         <viewport x="0" y="0" w="1133" h="458"/>
         <scale>0.94</scale>
@@ -1538,14 +3264,14 @@
             <bounds x="504" y="196" w="32" h="32"/>
           </attributes>
         </vertex>
-        <vertex id="OutputCondition_2">
-          <attributes>
-            <bounds x="1,606" y="301" w="33" h="32"/>
-          </attributes>
-        </vertex>
         <vertex id="C_7">
           <attributes>
             <bounds x="824" y="382" w="32" h="32"/>
+          </attributes>
+        </vertex>
+        <vertex id="OutputCondition_2">
+          <attributes>
+            <bounds x="1,606" y="301" w="33" h="32"/>
           </attributes>
         </vertex>
         <vertex id="C_6">
@@ -1563,9 +3289,37 @@
             <bounds x="824" y="513" w="32" h="32"/>
           </attributes>
         </vertex>
+        <container id="T_2">
+          <vertex>
+            <attributes>
+              <bounds x="1,525" y="299" w="32" h="33"/>
+            </attributes>
+          </vertex>
+          <decorator type="XOR_join">
+            <position>12</position>
+            <attributes>
+              <bounds x="1,515" y="299" w="11" h="33"/>
+            </attributes>
+          </decorator>
+        </container>
+        <vertex id="T_1">
+          <attributes>
+            <bounds x="904" y="112" w="33" h="33"/>
+          </attributes>
+        </vertex>
+        <vertex id="T_4">
+          <attributes>
+            <bounds x="1,460" y="232" w="32" h="32"/>
+          </attributes>
+        </vertex>
         <vertex id="T_15">
           <attributes>
             <bounds x="907" y="275" w="33" h="33"/>
+          </attributes>
+        </vertex>
+        <vertex id="T_3">
+          <attributes>
+            <bounds x="1,457" y="373" w="32" h="32"/>
           </attributes>
         </vertex>
         <vertex id="T_14">
@@ -1651,6 +3405,11 @@
         <vertex id="T_19">
           <attributes>
             <bounds x="1,281" y="235" w="32" h="32"/>
+          </attributes>
+        </vertex>
+        <vertex id="T">
+          <attributes>
+            <bounds x="995" y="112" w="32" h="32"/>
           </attributes>
         </vertex>
         <vertex id="T_18">
@@ -1748,39 +3507,6 @@
             </attributes>
           </label>
         </container>
-        <vertex id="T_25">
-          <attributes>
-            <bounds x="995" y="112" w="32" h="32"/>
-          </attributes>
-        </vertex>
-        <vertex id="T_24">
-          <attributes>
-            <bounds x="904" y="112" w="33" h="33"/>
-          </attributes>
-        </vertex>
-        <container id="T_23">
-          <vertex>
-            <attributes>
-              <bounds x="1,525" y="299" w="32" h="33"/>
-            </attributes>
-          </vertex>
-          <decorator type="XOR_join">
-            <position>12</position>
-            <attributes>
-              <bounds x="1,515" y="299" w="11" h="33"/>
-            </attributes>
-          </decorator>
-        </container>
-        <vertex id="T_22">
-          <attributes>
-            <bounds x="1,457" y="373" w="32" h="32"/>
-          </attributes>
-        </vertex>
-        <vertex id="T_21">
-          <attributes>
-            <bounds x="1,460" y="232" w="32" h="32"/>
-          </attributes>
-        </vertex>
         <vertex id="T_20">
           <attributes>
             <bounds x="1,282" y="364" w="33" h="33"/>
@@ -1834,6 +3560,12 @@
             <lineStyle>11</lineStyle>
           </attributes>
         </flow>
+        <flow source="T_4" target="T_2">
+          <ports in="13" out="4"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
         <flow source="C_6" target="T_9">
           <ports in="13" out="2"/>
           <attributes>
@@ -1844,26 +3576,14 @@
             </points>
           </attributes>
         </flow>
-        <flow source="T_21" target="T_23">
-          <ports in="13" out="4"/>
+        <flow source="T_14" target="T_1">
+          <ports in="13" out="12"/>
           <attributes>
             <lineStyle>11</lineStyle>
           </attributes>
         </flow>
         <flow source="C_10" target="T_20">
           <ports in="11" out="12"/>
-          <attributes>
-            <lineStyle>11</lineStyle>
-          </attributes>
-        </flow>
-        <flow source="C_10" target="T_23">
-          <ports in="13" out="2"/>
-          <attributes>
-            <lineStyle>11</lineStyle>
-          </attributes>
-        </flow>
-        <flow source="T_24" target="T_25">
-          <ports in="13" out="12"/>
           <attributes>
             <lineStyle>11</lineStyle>
           </attributes>
@@ -1878,12 +3598,6 @@
             </points>
           </attributes>
         </flow>
-        <flow source="T_14" target="T_24">
-          <ports in="13" out="12"/>
-          <attributes>
-            <lineStyle>11</lineStyle>
-          </attributes>
-        </flow>
         <flow source="C_3" target="Prepare_Route_Guide">
           <ports in="13" out="12"/>
           <attributes>
@@ -1891,6 +3605,16 @@
             <points>
               <value x="312" y="284.5"/>
               <value x="391" y="292.5"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="T_3" target="T_2">
+          <ports in="13" out="0"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+            <points>
+              <value x="1,488" y="388.5"/>
+              <value x="1,520" y="330.5"/>
             </points>
           </attributes>
         </flow>
@@ -1937,6 +3661,12 @@
             </points>
           </attributes>
         </flow>
+        <flow source="C_9" target="T_15">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
         <flow source="T_9" target="T_10">
           <ports in="1" out="12"/>
           <attributes>
@@ -1945,12 +3675,6 @@
               <value x="1,038" y="456.75"/>
               <value x="1,101" y="397.5"/>
             </points>
-          </attributes>
-        </flow>
-        <flow source="C_9" target="T_15">
-          <ports in="13" out="12"/>
-          <attributes>
-            <lineStyle>11</lineStyle>
           </attributes>
         </flow>
         <flow source="T_5" target="C_8">
@@ -1974,22 +3698,6 @@
             </points>
           </attributes>
         </flow>
-        <flow source="C_12" target="T_22">
-          <ports in="13" out="12"/>
-          <attributes>
-            <lineStyle>11</lineStyle>
-          </attributes>
-        </flow>
-        <flow source="C_1" target="Carrier_Timeout">
-          <ports in="13" out="12"/>
-          <attributes>
-            <lineStyle>11</lineStyle>
-            <points>
-              <value x="307" y="154.5"/>
-              <value x="391" y="151.5"/>
-            </points>
-          </attributes>
-        </flow>
         <flow source="C_8" target="T_9">
           <ports in="11" out="0"/>
           <attributes>
@@ -2001,10 +3709,14 @@
             </points>
           </attributes>
         </flow>
-        <flow source="C_12" target="T_23">
-          <ports in="10" out="3"/>
+        <flow source="C_1" target="Carrier_Timeout">
+          <ports in="13" out="12"/>
           <attributes>
             <lineStyle>11</lineStyle>
+            <points>
+              <value x="307" y="154.5"/>
+              <value x="391" y="151.5"/>
+            </points>
           </attributes>
         </flow>
         <flow source="C_8" target="T_8">
@@ -2033,14 +3745,19 @@
             </points>
           </attributes>
         </flow>
-        <flow source="T_25" target="T_23">
-          <ports in="13" out="4"/>
+        <flow source="C_10" target="T_2">
+          <ports in="13" out="2"/>
           <attributes>
-            <lineStyle>13</lineStyle>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="T_7" target="T_9">
+          <ports in="13" out="1"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
             <points>
-              <value x="1,026" y="127.5"/>
-              <value x="1,508" y="223"/>
-              <value x="1,520" y="299.5"/>
+              <value x="938" y="397.5"/>
+              <value x="987" y="456.75"/>
             </points>
           </attributes>
         </flow>
@@ -2054,14 +3771,10 @@
             </points>
           </attributes>
         </flow>
-        <flow source="T_7" target="T_9">
-          <ports in="13" out="1"/>
+        <flow source="T_2" target="OutputCondition_2">
+          <ports in="13" out="12"/>
           <attributes>
             <lineStyle>11</lineStyle>
-            <points>
-              <value x="938" y="397.5"/>
-              <value x="987" y="456.75"/>
-            </points>
           </attributes>
         </flow>
         <flow source="Calculate_Carrier_Timeout" target="C_1">
@@ -2144,18 +3857,25 @@
             <lineStyle>11</lineStyle>
           </attributes>
         </flow>
-        <flow source="T_22" target="T_23">
-          <ports in="13" out="0"/>
+        <flow source="T" target="T_2">
+          <ports in="13" out="4"/>
           <attributes>
-            <lineStyle>11</lineStyle>
+            <lineStyle>13</lineStyle>
             <points>
-              <value x="1,488" y="388.5"/>
-              <value x="1,520" y="330.5"/>
+              <value x="1,026" y="127.5"/>
+              <value x="1,508" y="223"/>
+              <value x="1,520" y="299.5"/>
             </points>
           </attributes>
         </flow>
         <flow source="T_13" target="C_9">
           <ports in="4" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="C_11" target="T_4">
+          <ports in="13" out="12"/>
           <attributes>
             <lineStyle>11</lineStyle>
           </attributes>
@@ -2170,7 +3890,25 @@
             </points>
           </attributes>
         </flow>
-        <flow source="T_23" target="OutputCondition_2">
+        <flow source="C_11" target="T_2">
+          <ports in="11" out="1"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="C_12" target="T_3">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="C_12" target="T_2">
+          <ports in="10" out="3"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="T_1" target="T">
           <ports in="13" out="12"/>
           <attributes>
             <lineStyle>11</lineStyle>
@@ -2209,12 +3947,6 @@
         </flow>
         <flow source="T_18" target="C_10">
           <ports in="13" out="10"/>
-          <attributes>
-            <lineStyle>11</lineStyle>
-          </attributes>
-        </flow>
-        <flow source="C_11" target="T_23">
-          <ports in="11" out="1"/>
           <attributes>
             <lineStyle>11</lineStyle>
           </attributes>
@@ -2261,12 +3993,6 @@
             </points>
           </attributes>
         </flow>
-        <flow source="C_11" target="T_21">
-          <ports in="13" out="12"/>
-          <attributes>
-            <lineStyle>11</lineStyle>
-          </attributes>
-        </flow>
         <flow source="C_2" target="Estimate_Trailer_Usage">
           <ports in="13" out="12"/>
           <attributes>
@@ -2279,7 +4005,7 @@
         </flow>
       </net>
       <net id="Freight_in_Transit">
-        <bounds x="0" y="0" w="1130" h="455"/>
+        <bounds x="0" y="-34" w="1115" h="506"/>
         <frame x="0" y="0" w="1133" h="458"/>
         <viewport x="0" y="0" w="1133" h="458"/>
         <vertex id="InputCondition_3">
@@ -2287,14 +4013,181 @@
             <bounds x="36" y="280" w="32" h="32"/>
           </attributes>
         </vertex>
-        <vertex id="OutputCondition_3">
+        <vertex id="C_14">
           <attributes>
-            <bounds x="1,056" y="280" w="32" h="32"/>
+            <bounds x="384" y="364" w="32" h="32"/>
           </attributes>
         </vertex>
+        <vertex id="C_13">
+          <attributes>
+            <bounds x="236" y="184" w="32" h="32"/>
+          </attributes>
+        </vertex>
+        <vertex id="OutputCondition_3">
+          <attributes>
+            <bounds x="676" y="184" w="32" h="32"/>
+          </attributes>
+        </vertex>
+        <container id="Initiate_Shipment_Status_Inquiry">
+          <vertex>
+            <attributes>
+              <bounds x="236" y="88" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="204" y="120" w="97" h="61"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Issue_Trackpoint_Notice">
+          <vertex>
+            <attributes>
+              <bounds x="236" y="364" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="200" y="396" w="97" h="61"/>
+            </attributes>
+          </label>
+          <decorator type="XOR_join">
+            <position>12</position>
+            <attributes>
+              <bounds x="226" y="364" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="Create_Acceptance_Certificate">
+          <vertex>
+            <attributes>
+              <bounds x="540" y="184" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="504" y="216" w="96" h="60"/>
+            </attributes>
+          </label>
+          <decorator type="AND_join">
+            <position>12</position>
+            <attributes>
+              <bounds x="530" y="184" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="T_21">
+          <vertex>
+            <attributes>
+              <bounds x="128" y="280" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <decorator type="AND_split">
+            <position>13</position>
+            <attributes>
+              <bounds x="159" y="280" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="Log_Trackpoint_Order_Entry">
+          <vertex>
+            <attributes>
+              <bounds x="520" y="364" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="488" y="396" w="96" h="40"/>
+            </attributes>
+          </label>
+        </container>
+        <flow source="C_14" target="Log_Trackpoint_Order_Entry">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="C_13" target="Create_Acceptance_Certificate">
+          <ports in="13" out="2"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="InputCondition_3" target="T_21">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Issue_Trackpoint_Notice" target="C_14">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="C_14" target="Issue_Trackpoint_Notice">
+          <label>[more trackpoints]</label>
+          <ports in="11" out="0"/>
+          <attributes>
+            <offset x="-0.563" y="0.493"/>
+            <labelposition x="497" y="-10"/>
+            <lineStyle>12</lineStyle>
+            <points>
+              <value x="399.5" y="395"/>
+              <value x="316" y="468"/>
+              <value x="231" y="395"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="C_13" target="Initiate_Shipment_Status_Inquiry">
+          <ports in="10" out="13"/>
+          <attributes>
+            <lineStyle>12</lineStyle>
+            <points>
+              <value x="251.5" y="184"/>
+              <value x="300" y="156"/>
+              <value x="267" y="123.5"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="Log_Trackpoint_Order_Entry" target="Create_Acceptance_Certificate">
+          <ports in="10" out="0"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Create_Acceptance_Certificate" target="OutputCondition_3">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Initiate_Shipment_Status_Inquiry" target="C_13">
+          <ports in="12" out="10"/>
+          <attributes>
+            <lineStyle>12</lineStyle>
+            <points>
+              <value x="236" y="123.5"/>
+              <value x="212" y="156"/>
+              <value x="251.5" y="184"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="T_21" target="C_13">
+          <ports in="0" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="T_21" target="Issue_Trackpoint_Notice">
+          <ports in="4" out="2"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
       </net>
       <net id="Ordering">
-        <bounds x="0" y="-54" w="1115" h="539"/>
+        <bounds x="0" y="-42" w="1115" h="539"/>
         <frame x="0" y="0" w="1133" h="458"/>
         <viewport x="0" y="0" w="1133" h="458"/>
         <vertex id="C">
@@ -2514,6 +4407,18 @@
             </attributes>
           </decorator>
         </container>
+        <container id="Freight_in_Transit">
+          <vertex>
+            <attributes>
+              <bounds x="388" y="264" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="356" y="296" w="97" h="41"/>
+            </attributes>
+          </label>
+        </container>
         <container id="Ordering">
           <vertex>
             <attributes>
@@ -2531,18 +4436,6 @@
               <bounds x="203" y="192" w="11" h="32"/>
             </attributes>
           </decorator>
-        </container>
-        <container id="Freight_in_Transit">
-          <vertex>
-            <attributes>
-              <bounds x="388" y="264" w="32" h="32"/>
-            </attributes>
-          </vertex>
-          <label>
-            <attributes>
-              <bounds x="356" y="296" w="97" h="41"/>
-            </attributes>
-          </label>
         </container>
         <container id="Freight_Delivered">
           <vertex>
@@ -2633,20 +4526,287 @@
           </attributes>
         </flow>
       </net>
+      <net id="Return_Merchandise">
+        <bounds x="0" y="0" w="1130" h="455"/>
+        <frame x="0" y="0" w="1133" h="458"/>
+        <viewport x="0" y="0" w="1133" h="458"/>
+        <vertex id="OutputCondition_8">
+          <attributes>
+            <bounds x="1,056" y="220" w="32" h="32"/>
+          </attributes>
+        </vertex>
+        <vertex id="InputCondition_8">
+          <attributes>
+            <bounds x="36" y="220" w="32" h="32"/>
+          </attributes>
+        </vertex>
+        <container id="Return_Merchandise_2">
+          <vertex>
+            <attributes>
+              <bounds x="204" y="220" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="172" y="252" w="96" h="40"/>
+            </attributes>
+          </label>
+        </container>
+        <flow source="Return_Merchandise_2" target="OutputCondition_8">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="InputCondition_8" target="Return_Merchandise_2">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+      </net>
       <net id="Freight_Delivered">
         <bounds x="0" y="0" w="1130" h="455"/>
         <frame x="0" y="0" w="1133" h="458"/>
         <viewport x="0" y="0" w="1133" h="458"/>
         <vertex id="InputCondition_5">
           <attributes>
-            <bounds x="36" y="280" w="32" h="32"/>
+            <bounds x="40" y="196" w="32" h="32"/>
           </attributes>
         </vertex>
         <vertex id="OutputCondition_5">
           <attributes>
-            <bounds x="1,056" y="280" w="32" h="32"/>
+            <bounds x="660" y="196" w="32" h="32"/>
           </attributes>
         </vertex>
+        <container id="Lodge_a_request_for_Return_Merchandise">
+          <vertex>
+            <attributes>
+              <bounds x="196" y="312" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="164" y="344" w="96" h="80"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Claims_Timeout">
+          <vertex>
+            <attributes>
+              <bounds x="196" y="196" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="164" y="228" w="96" h="20"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Lodge_Loss_or_Damage_Claim_Report">
+          <vertex>
+            <attributes>
+              <bounds x="196" y="72" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="164" y="104" w="96" h="60"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Authorize_Loss_or_Damage_Claim">
+          <vertex>
+            <attributes>
+              <bounds x="384" y="72" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="356" y="104" w="96" h="60"/>
+            </attributes>
+          </label>
+          <decorator type="XOR_split">
+            <position>13</position>
+            <attributes>
+              <bounds x="415" y="72" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="Authorize_Return_Merchandise">
+          <vertex>
+            <attributes>
+              <bounds x="388" y="316" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="360" y="348" w="96" h="60"/>
+            </attributes>
+          </label>
+          <decorator type="XOR_split">
+            <position>13</position>
+            <attributes>
+              <bounds x="419" y="316" w="11" h="32"/>
+            </attributes>
+          </decorator>
+        </container>
+        <container id="Return_Merchandise">
+          <vertex>
+            <attributes>
+              <bounds x="552" y="316" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="520" y="348" w="96" h="40"/>
+            </attributes>
+          </label>
+        </container>
+        <container id="Loss_or_Damage_Management">
+          <vertex>
+            <attributes>
+              <bounds x="552" y="72" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="520" y="104" w="96" h="60"/>
+            </attributes>
+          </label>
+        </container>
+        <flow source="Authorize_Return_Merchandise" target="Return_Merchandise">
+          <label>[return authorized]</label>
+          <ports in="2" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="InputCondition_5" target="Lodge_Loss_or_Damage_Claim_Report">
+          <label>freight loss or damaged</label>
+          <ports in="10" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Authorize_Return_Merchandise" target="OutputCondition_5">
+          <label>[return not authorized]</label>
+          <ports in="1" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Authorize_Loss_or_Damage_Claim" target="OutputCondition_5">
+          <label>[claim not authorized]</label>
+          <ports in="4" out="12"/>
+          <attributes>
+            <offset x="0" y="0"/>
+            <labelposition x="354" y="31"/>
+            <lineStyle>11</lineStyle>
+            <points>
+              <value x="420" y="103"/>
+              <value x="660" y="211.5"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="Loss_or_Damage_Management" target="OutputCondition_5">
+          <ports in="13" out="10"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="InputCondition_5" target="Claims_Timeout">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+            <points>
+              <value x="71" y="211.5"/>
+              <value x="196" y="211.5"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="Return_Merchandise" target="OutputCondition_5">
+          <ports in="13" out="11"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Authorize_Loss_or_Damage_Claim" target="Loss_or_Damage_Management">
+          <label>[claim authorized]</label>
+          <ports in="2" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Lodge_Loss_or_Damage_Claim_Report" target="Authorize_Loss_or_Damage_Claim">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Claims_Timeout" target="OutputCondition_5">
+          <label>deadline for return or claim expired</label>
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+            <points>
+              <value x="227" y="211.5"/>
+              <value x="1,060" y="211.5"/>
+            </points>
+          </attributes>
+        </flow>
+        <flow source="InputCondition_5" target="Lodge_a_request_for_Return_Merchandise">
+          <label>request of return merchandise</label>
+          <ports in="11" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="Lodge_a_request_for_Return_Merchandise" target="Authorize_Return_Merchandise">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+      </net>
+      <net id="Loss_or_Damage_Management">
+        <bounds x="0" y="0" w="1130" h="455"/>
+        <frame x="0" y="0" w="1133" h="458"/>
+        <viewport x="0" y="0" w="1133" h="458"/>
+        <vertex id="OutputCondition_7">
+          <attributes>
+            <bounds x="1,056" y="220" w="32" h="32"/>
+          </attributes>
+        </vertex>
+        <vertex id="InputCondition_7">
+          <attributes>
+            <bounds x="36" y="220" w="32" h="32"/>
+          </attributes>
+        </vertex>
+        <container id="Loss_or_Damage_Management_2">
+          <vertex>
+            <attributes>
+              <bounds x="308" y="216" w="32" h="32"/>
+            </attributes>
+          </vertex>
+          <label>
+            <attributes>
+              <bounds x="276" y="248" w="96" h="60"/>
+            </attributes>
+          </label>
+        </container>
+        <flow source="Loss_or_Damage_Management_2" target="OutputCondition_7">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
+        <flow source="InputCondition_7" target="Loss_or_Damage_Management_2">
+          <ports in="13" out="12"/>
+          <attributes>
+            <lineStyle>11</lineStyle>
+          </attributes>
+        </flow>
       </net>
     </specification>
   </layout>
